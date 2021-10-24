@@ -4,7 +4,7 @@ from rabbitconnection import connection
 
 
 # 在一个类中封装了connection建立、queue声明、consumer配置、回调函数等
-class FibonacciRpcClient(object):
+class FibonacciRpcClient:
     def __init__(self):
         # 建立到RabbitMQ Server的connection
         self.connection = connection
@@ -19,9 +19,11 @@ class FibonacciRpcClient(object):
         # 这里的指明从client自己创建的临时队列中接收消息
         # 并使用on_response函数处理消息
         # 不对消息进行确认
-        self.channel.basic_consume(queue=self._queue,
-                                   on_message_callback=self.on_response,
-                                   auto_ack=True)
+        self.channel.basic_consume(
+            queue=self._queue,
+            on_message_callback=self.on_response,
+            auto_ack=True
+        )
         self.response = None
         self.corr_id = None
 
