@@ -13,14 +13,14 @@ class FibonacciRpcClient:
 
         # 声明一个临时的回调队列
         result = self.channel.queue_declare('', exclusive=True)
-        self._queue = result.method.queue
+        self.callback_queue = result.method.queue
 
         # 此处client既是producer又是consumer，因此要配置consume参数
         # 这里的指明从client自己创建的临时队列中接收消息
         # 并使用on_response函数处理消息
         # 不对消息进行确认
         self.channel.basic_consume(
-            queue=self._queue,
+            queue=self.callback_queue,
             on_message_callback=self.on_response,
             auto_ack=True
         )
@@ -32,7 +32,7 @@ class FibonacciRpcClient:
     # 若相同则response属性为接收到的message
     def on_response(self, ch, method, props, body):
         if self.corr_id == props.correlation_id:
-            self.response = body
+            self.response = body.decode()
 
     def call(self, n):
         # 初始化response和corr_id属性
@@ -45,11 +45,10 @@ class FibonacciRpcClient:
             exchange='',
             routing_key='rpc_queue',
             properties=pika.BasicProperties(
-                reply_to=self._queue,
+                reply_to=self.callback_queue,
                 correlation_id=self.corr_id,
             ),
-            # message需为字符串
-            body=str(n)
+            body=str(n).encode()
         )
 
         while self.response is None:
@@ -61,7 +60,7 @@ class FibonacciRpcClient:
 # 生成类的实例
 fibonacci_rpc = FibonacciRpcClient()
 
-print(" [x] Requesting fib(30)")
+print(" [x] Requesting fib(10)")
 # 调用实例的call方法
-response = fibonacci_rpc.call(30)
+response = fibonacci_rpc.call(10)
 print(" [.] Got %r" % response)

@@ -8,15 +8,16 @@ channel.exchange_declare(
     exchange_type='topic'
 )
 
-severity = '*.rabbit.*'
-message = 'Hello World!'
+routing_keys = ['anonymous.info', 'kern.critical']
+messages = ['Hello World!', 'A critical kernel error']
 
-# 向名为topic_logs的exchange 按照设置的routing_key发送message
-channel.basic_publish(
-    exchange='topic_logs',
-    routing_key=severity,
-    body=message.encode()
-)
+for i, key in enumerate(routing_keys):
+    # 向名为topic_logs的exchange 按照设置的routing_key发送message
+    channel.basic_publish(
+        exchange='topic_logs',
+        routing_key=key,
+        body=messages[i].encode()
+    )
 
-print(" [x] Sent %r:%r" % (severity, message))
+    print(" [x] Sent %r:%r" % (key, messages[i]))
 connection.close()

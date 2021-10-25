@@ -13,7 +13,7 @@ result = channel.queue_declare('', exclusive=True)
 queue_name = result.method.queue
 
 # 从命令行获取参数:routing_key
-severities = ["info"]
+severities = ["info", "warning", "error"]
 
 for severity in severities:
     # exchange和queue之间的binding可接受routing_key参数
@@ -29,8 +29,10 @@ for severity in severities:
 
 
 def callback(ch, method, properties, body):
-    print(" [x] %r:%r" % (method.routing_key, body,))
+    print(" [x] %r:%r" % (method.routing_key, body.decode(),))
 
+
+print(' [*] Waiting for logs. To exit press CTRL+C')
 
 channel.basic_consume(
     queue=queue_name,
