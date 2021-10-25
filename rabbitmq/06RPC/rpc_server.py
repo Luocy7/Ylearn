@@ -35,7 +35,7 @@ def on_request(ch, method, props, body):
         exchange='',
         routing_key=props.reply_to,
         properties=pika.BasicProperties(correlation_id=props.correlation_id),
-        body=response.encode()
+        body=str(response).encode()
     )
     ch.basic_ack(delivery_tag=method.delivery_tag)
 

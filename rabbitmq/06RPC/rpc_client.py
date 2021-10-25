@@ -24,7 +24,7 @@ class FibonacciRpcClient:
             on_message_callback=self.on_response,
             auto_ack=True
         )
-        self.response = None
+        self.response: int = -1
         self.corr_id = None
 
     # 定义回调函数
@@ -32,7 +32,7 @@ class FibonacciRpcClient:
     # 若相同则response属性为接收到的message
     def on_response(self, ch, method, props, body):
         if self.corr_id == props.correlation_id:
-            self.response = body.decode()
+            self.response: int = int(body.decode())
 
     def call(self, n):
         # 初始化response和corr_id属性
@@ -51,10 +51,10 @@ class FibonacciRpcClient:
             body=str(n).encode()
         )
 
-        while self.response is None:
+        while self.response < 0:
             self.connection.process_data_events()
 
-        return int(self.response)
+        return self.response
 
 
 # 生成类的实例
