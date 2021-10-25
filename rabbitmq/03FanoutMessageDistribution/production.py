@@ -9,9 +9,11 @@ channel.exchange_declare('logs', exchange_type='fanout')
 
 # 因为是fanout广播类型的exchange，这里无需指定routing_key
 for i in range(10):
-    channel.basic_publish(exchange='logs',
-                          routing_key='',
-                          body='Hello world！%s' % i)
+    channel.basic_publish(
+        exchange='logs',
+        routing_key='',
+        body=f'Hello world！{i}'.encode()
+    )
 
 # 关闭与rabbitmq server的连接
 connection.close()

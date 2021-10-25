@@ -20,8 +20,11 @@ channel.basic_qos(prefetch_count=1)
 # 告诉rabbitmq，用callback来接收消息
 # 默认情况下是要对消息进行确认的，以防止消息丢失。
 # 此处将no_ack明确指明为True，不对消息进行确认。
-channel.basic_consume('python-test',
-                      on_message_callback=callback)
-# auto_ack=True)  # 自动发送确认消息
+channel.basic_consume(
+    'python-test',
+    on_message_callback=callback,
+    # auto_ack=True  # 自动发送确认消息
+)
+
 # 开始接收信息，并进入阻塞状态，队列里有信息才会调用callback进行处理
 channel.start_consuming()

@@ -13,7 +13,7 @@ for i in range(10):
     channel.basic_publish(
         exchange='',
         routing_key='python-test',
-        body='Hello world！%s' % i,
+        body=f'Hello world！{i}'.encode(),
         properties=pika.BasicProperties(delivery_mode=2)
     )
 # 关闭与rabbitmq server的连接
