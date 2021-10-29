@@ -19,8 +19,9 @@ async def tcp_echo_client(path):
 
 
 async def main():
-    await tcp_echo_client("/foo")
-    await tcp_echo_client("/bar")
+    for i in range(1000):
+        await tcp_echo_client("/foo")
+        await tcp_echo_client("/bar")
 
 
 asyncio.run(main())
