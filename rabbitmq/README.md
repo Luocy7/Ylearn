@@ -1,6 +1,6 @@
 
 
-# Python实现RabbitMQ中6种消息模型()
+# Python实现RabbitMQ中6种消息模型
 
 [source](https://segmentfault.com/a/1190000022193210) 
 
