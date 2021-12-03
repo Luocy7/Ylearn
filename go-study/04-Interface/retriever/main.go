@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"go-study/04-interface/retriever/mock"
-	"go-study/04-interface/retriever/real"
+	"go-study/04-Interface/retriever/mock"
+	"go-study/04-Interface/retriever/real"
 
 	"time"
 )

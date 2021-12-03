@@ -3,7 +3,7 @@ package main
 
 import (
 	"fmt"
-	"go-study/03-oop/02.packages/tree"
+	"go-study/03-OOP/02.packages/tree"
 )
 
 func main() {

@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"go-study/03-oop/03.extend/queue"
+	"go-study/03-OOP/03.extend/queue"
 )
 
 func main() {

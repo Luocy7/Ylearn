@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"go-study/04-interface/04.interfaceCombine/service"
-	"go-study/04-interface/04.interfaceCombine/service/impl"
+	"go-study/04-Interface/04.interfaceCombine/service"
+	"go-study/04-Interface/04.interfaceCombine/service/impl"
 )
 
 // 使用组合接口

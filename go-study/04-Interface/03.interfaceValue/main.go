@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"go-study/04-interface/03.interfaceValue/retriever"
-	"go-study/04-interface/03.interfaceValue/retriever/impl"
+	"go-study/04-Interface/03.interfaceValue/retriever"
+	"go-study/04-Interface/03.interfaceValue/retriever/impl"
 )
 
 func getBaiduIndex(r retriever.Retriever) string {

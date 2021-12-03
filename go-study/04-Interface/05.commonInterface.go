@@ -28,6 +28,7 @@ func printReaderContents(reader io.Reader) {
 func main() {
 	// 测试类的打印
 	student := Student{"10000", "马云"}
+	fmt.Println(student.String())
 	fmt.Println(student)
 
 	// 测试格式转换输出

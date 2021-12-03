@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"go-study/05-functonal/03.闭包的应用II/tree"
+	"go-study/05-FunctionalProgram/02.closure/tree"
 )
 
 func main() {
