@@ -1,17 +1,19 @@
 package lru
 
-import "container/list"
+import (
+	"container/list"
+)
 
 // Cache is a LRU cache. It is not safe for concurrent access.
 type Cache struct {
-	maxBytes int64
-	nbytes   int64
-	ll       *list.List
-	cache    map[string]*list.Element
-	// optional and executed when an entry is purged.
-	OnEvicted func(key string, value Value)
+	maxBytes  int64                         // max memeory
+	nbytes    int64                         // current used memeory
+	ll        *list.List                    // doubly linked list
+	cache     map[string]*list.Element      // map
+	OnEvicted func(key string, value Value) // optional and executed when an entry node is purged.
 }
 
+// node of doubly linked list ll
 type entry struct {
 	key   string
 	value Value
@@ -34,9 +36,10 @@ func New(maxBytes int64, onEvicted func(string, Value)) *Cache {
 
 // Add adds a value to the cache.
 func (c *Cache) Add(key string, value Value) {
+	// if key in cache
 	if ele, ok := c.cache[key]; ok {
 		c.ll.MoveToFront(ele)
-		kv := ele.Value.(*entry)
+		kv := ele.Value.(*entry) // old value
 		c.nbytes += int64(value.Len()) - int64(kv.value.Len())
 		kv.value = value
 	} else {
@@ -61,7 +64,7 @@ func (c *Cache) Get(key string) (value Value, ok bool) {
 
 // RemoveOldest removes the oldest item
 func (c *Cache) RemoveOldest() {
-	ele := c.ll.Back()
+	ele := c.ll.Back() // get last element of list ll or nil if the list is empty.
 	if ele != nil {
 		c.ll.Remove(ele)
 		kv := ele.Value.(*entry)
