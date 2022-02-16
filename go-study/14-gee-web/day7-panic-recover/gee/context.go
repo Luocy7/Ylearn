@@ -8,6 +8,7 @@ import (
 
 type H map[string]interface{}
 
+// Context 存储请求上下文
 type Context struct {
 	// origin objects
 	Writer http.ResponseWriter

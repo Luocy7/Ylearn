@@ -87,7 +87,7 @@ func (group *RouterGroup) createStaticHandler(relativePath string, fs http.FileS
 	}
 }
 
-// serve static files
+// Static serve static files
 func (group *RouterGroup) Static(relativePath string, root string) {
 	handler := group.createStaticHandler(relativePath, http.Dir(root))
 	urlPattern := path.Join(relativePath, "/*filepath")
@@ -95,7 +95,7 @@ func (group *RouterGroup) Static(relativePath string, root string) {
 	group.GET(urlPattern, handler)
 }
 
-// for custom render function
+// SetFuncMap for custom render function
 func (engine *Engine) SetFuncMap(funcMap template.FuncMap) {
 	engine.funcMap = funcMap
 }
