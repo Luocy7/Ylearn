@@ -34,7 +34,7 @@ class Task:
 
     def step(self):
         try:
-            f = self.gen.send(None)  # next(gen)
+            f: Future = self.gen.send(None)  # next(gen)
         except StopIteration:
             return
 
@@ -82,11 +82,13 @@ async def get(path):
 start = time.time()
 Task(get('/foo'))  # get() just return a generator, so we need Task class to execute the generator
 Task(get('/bar'))
+Task(get('/foo'))
+Task(get('/bar'))
 
 while n_jobs:
     events = selector.select()
     for key, mask in events:
-        future = key.data
+        future: Future = key.data
         future.resolve()  # = f.callback() = task.step() = next(gen) = next(get("/foo"))
 
 print('took %.2f seconds' % (time.time() - start))
