@@ -1,15 +1,15 @@
 package main
 
 import (
-	"demo/tree" //使用导入的包，公开public的方法和变量首字母都要大写
 	"fmt"
+	"go-study/09-Channel/03.TraverseTreeWithChannel/tree"
 )
 
 func main() {
 	// 创建结构初始化
 	var root tree.Node
 	left := tree.Node{Val: 1}
-	right := tree.Node{2, nil, nil}
+	right := tree.Node{Val: 2}
 	root.Left = &left
 	root.Right = &right
 
