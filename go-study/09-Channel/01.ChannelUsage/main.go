@@ -72,21 +72,23 @@ func bufferedChannel() {
 }
 
 func closedChannel() {
-	c := make(chan int)
-	go func(c chan int) {
-		for n := range c {
-			fmt.Println("channel -> ", n)
-		}
-	}(c)
-	c <- 1
-	c <- 2
+	c := make(chan int, 3)
+	go worker(0, c)
+
+	c <- 'a'
+	c <- 'b'
+	c <- 'c'
+	c <- 'd'
 	// 发送方发完数据close
 	close(c)
 	time.Sleep(time.Millisecond)
 }
 
 func main() {
-	// channelDemo()
-	// bufferedChannel()
+	fmt.Println("Channel as first-class cizizen")
+	channelDemo()
+	fmt.Println("Buffered channel")
+	bufferedChannel()
+	fmt.Println("Channel closed")
 	closedChannel()
 }
